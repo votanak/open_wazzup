@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" icon="icon.png" />
+    <title>Target Page</title>
+    <style>
+      /* Устанавливаем высоту для всех родителей */
+      html,
+      body {
+        height: 100%;
+        margin: 0;
+      }
+
+      #responseContainer {
+        height: 100%;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+        display: flex; /* Используем flex для упрощения управления элементами */
+      }
+
+      iframe {
+        flex: 1; /* iframe займет всю доступную область */
+        border: none; /* Убираем рамку */
+      }
+    </style>
+  </head>
+  <body>
+    <div id="responseContainer" style="height: 100%; width: 100%"></div>
+    <script src="target.js"></script>
+  </body>
+</html>
