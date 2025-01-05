@@ -1,3 +1,11 @@
+// Обработка сообщений от фонового скрипта
+chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+  console.log('Сообщение получено на target.html:', message.text);
+  // Отправляем сообщение через window.postMessage для демонстрации
+  window.postMessage({ text: message.text }, '*');
+  zapros(message.text);
+});
+
 const zapros = async (authId) => {
   try {
     const response = await fetch(
@@ -25,7 +33,6 @@ const zapros = async (authId) => {
         }),
       },
     );
-    console.log(response);
 
     if (!response.ok) {
       throw new Error(`Ошибка HTTP: ${response.status}`);
@@ -37,11 +44,3 @@ const zapros = async (authId) => {
     responseContainer.innerHTML += `<p>Ошибка: ${error.message}</p>`;
   }
 };
-
-// Обработка сообщений от фонового скрипта
-chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
-  console.log('Сообщение получено на target.html:', message.text);
-  // Отправляем сообщение через window.postMessage для демонстрации
-  window.postMessage({ text: message.text }, '*');
-  zapros(message.text);
-});

@@ -3,8 +3,6 @@
     { url: 'https://labelectro.bitrix24.ru/marketplace/app/22/' },
     function (tabs) {
       const tabId = tabs[0].id;
-      console.log(tabs[0]);
-
       chrome.scripting.executeScript(
         {
           target: { tabId },
@@ -38,18 +36,17 @@
                 chrome.tabs.sendMessage(
                   targetTab.id,
                   { text: results[0].result },
-                  (response) => {
-                    if (chrome.runtime.lastError) {
-                      console.error(
-                        'Ошибка отправки сообщения:',
-                        chrome.runtime.lastError.message,
-                      );
-                    } else {
-                      console.log('Ответ от target.js:', response);
-                    }
-                  },
+                  // (response) => {
+                  //   if (chrome.runtime.lastError) {
+                  //     console.error(
+                  //       'Ошибка отправки сообщения:',
+                  //       chrome.runtime.lastError.message,
+                  //     );
+                  //   } else {
+                  //     console.log('Ответ от target.js:', response);
+                  //   }
+                  // },
                 );
-
                 chrome.tabs.onUpdated.removeListener(listener); // Удаляем слушатель
               }
             });
