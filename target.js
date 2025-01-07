@@ -1,20 +1,14 @@
-// Обработка сообщений от фонового скрипта
-chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
-  console.log('Сообщение получено на target.html:', message.text);
-  // Отправляем сообщение через window.postMessage для демонстрации
-  window.postMessage({ text: message.text }, '*');
-  zapros(message.text);
-});
+(async () => {
+  const params = new URLSearchParams(window.location.search);
+  const authId = params.get('authId') || 'Нет данных';
 
-const zapros = async (authId) => {
   try {
     const response = await fetch(
       'https://integrations.wazzup24.com/bitrix/connect?DOMAIN=labelectro.bitrix24.ru&PROTOCOL=1&LANG=ru&APP_SID=cd27c026457240cfe9fd0cb79feba342',
       {
         method: 'POST',
         headers: {
-          accept:
-            'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
+          accept: 'text/html',
           'content-type': 'application/x-www-form-urlencoded',
         },
         body: new URLSearchParams({
@@ -39,8 +33,10 @@ const zapros = async (authId) => {
     }
 
     const html = await response.text();
-    responseContainer.innerHTML += html;
+    const responseContainer = document.getElementById('responseContainer');
+    responseContainer.innerHTML = html;
   } catch (error) {
-    responseContainer.innerHTML += `<p>Ошибка: ${error.message}</p>`;
+    const responseContainer = document.getElementById('responseContainer');
+    responseContainer.innerHTML = `<p>Ошибка: ${error.message}</p>`;
   }
-};
+})();
